@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/dashboard.css' %}">
+{% endblock %}
+<div id="custom-dashboard">
+    <h1>College ERP Dashboard</h1>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2>{{ student_count }}</h2>
+            <p>Students</p>
+            <a href="/admin/erp_core/student/" class="view-all">View All</a>
+        </div>
+        <div class="stat-card">
+            <h2>{{ faculty_count }}</h2>
+            <p>Faculty</p>
+            <a href="/admin/erp_core/faculty/" class="view-all">View All</a>
+        </div>
+        <div class="stat-card">
+            <h2>{{ course_count }}</h2>
+            <p>Courses</p>
+            <a href="/admin/erp_core/course/" class="view-all">View All</a>
+        </div>
+    </div>
+
+    <div class="recent-activity">
+        <h2>Recent Students</h2>
+        <ul>
+            {% for student in recent_students %}
+            <li>
+                <a href="/admin/erp_core/student/{{ student.id }}/change/">
+                    {{ student.user.get_full_name }} ({{ student.roll_number }})
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Faculty Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Faculty Profile
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> {{ user.get_full_name }}</p>
+                <p><strong>Employee ID:</strong> {{ user.faculty.employee_id }}</p>
+                <p><strong>Department:</strong> {{ user.faculty.department.name }}</p>
+                <p><strong>Designation:</strong> {{ user.faculty.designation }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-9">
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                Assigned Courses
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Credits</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td>{{ course.code }}</td>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.credits }}</td>
+                            <td>
+                                <a href="{% url 'manage_attendance' course.id %}" class="btn btn-sm btn-primary">Attendance</a>
+                                <a href="{% url 'manage_grades' course.id %}" class="btn btn-sm btn-success">Grades</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

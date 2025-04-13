@@ -1,0 +1,145 @@
+/* Custom styles */
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.progress {
+    height: 20px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* Dashboard cards */
+.dashboard-card {
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.dashboard-card h3 {
+    margin-top: 0;
+}
+
+/* Responsive tables */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.dashboard {
+    padding: 20px;
+}
+.stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+    flex: 1;
+}
+
+#custom-dashboard {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.stat-card h2 {
+    font-size: 2.5rem;
+    margin: 0 0 10px;
+    color: #417690;
+}
+
+.stat-card p {
+    margin: 0 0 15px;
+    color: #666;
+}
+
+.view-all {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #417690;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.recent-activity {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.recent-activity ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recent-activity li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Add to base.html or your CSS file */
+.form-control {
+    margin-bottom: 10px;
+}
+
+.errorlist {
+    color: #dc3545;
+    list-style: none;
+    padding-left: 0;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    padding: 15px 20px;
+}
+
+/* Registration buttons styling */
+.registration-options {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .registration-options a {
+    min-width: 200px;
+  }

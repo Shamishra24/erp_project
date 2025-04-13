@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Student Dashboard</h2>
+    
+    {% if student %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Your Profile</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Name:</strong> {{ student.user.get_full_name }}</p>
+            <p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+            <p><strong>Department:</strong> {{ student.department }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Your Courses</h3>
+        </div>
+        <div class="card-body">
+            {% if courses %}
+                <ul class="list-group">
+                    {% for course in courses %}
+                    <li class="list-group-item">
+                        {{ course.name }} ({{ course.code }})
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No courses registered</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

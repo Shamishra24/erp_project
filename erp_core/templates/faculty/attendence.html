@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block title %}Manage Attendance - {{ course.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        Manage Attendance - {{ course.name }} ({{ course.code }})
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <label for="attendanceDate" class="form-label">Select Date</label>
+                    <input type="text" class="form-control datepicker" id="attendanceDate" name="date" value="{{ today }}" required>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-success">Save Attendance</button>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Roll No</th>
+                            <th>Student Name</th>
+                            <th>Present</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.roll_number }}</td>
+                            <td>{{ student.user.get_full_name }}</td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input attendance-toggle" type="checkbox" 
+                                           name="student_{{ student.id }}" id="student_{{ student.id }}" checked>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header bg-info text-white">
+        Recent Attendance Records
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for date, records in attendance_by_date.items %}
+                    <tr>
+                        <td>{{ date }}</td>
+                        <td>{{ records.present }}</td>
+                        <td>{{ records.absent }}</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: {{ records.percentage }}%">
+                                    {{ records.percentage }}%
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true
+    });
+    
+    // AJAX attendance marking
+    $('.attendance-toggle').change(function() {
+        const studentId = $(this).attr('name').split('_')[1];
+        const date = $('#attendanceDate').val();
+        const status = $(this).is(':checked');
+        
+        $.ajax({
+            url: "{% url 'mark_attendance_ajax' %}",
+            type: "POST",
+            data: {
+                'student_id': studentId,
+                'course_id': "{{ course.id }}",
+                'date': date,
+                'status': status,
+                'csrfmiddlewaretoken': "{{ csrf_token }}"
+            },
+            success: function(response) {
+                if (!response.success) {
+                    alert(response.message);
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

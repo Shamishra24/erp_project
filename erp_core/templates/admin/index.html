@@ -1,0 +1,12 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+<div class="custom-dashboard">
+    <h2>Quick Stats</h2>
+    <div class="stats">
+        <div>Students: {{ student_count }}</div>
+        <div>Faculty: {{ faculty_count }}</div>
+    </div>
+    {{ block.super }}
+</div>
+{% endblock %}

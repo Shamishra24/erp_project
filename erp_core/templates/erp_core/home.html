@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}College ERP - Home{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1>Welcome to College ERP System</h1>
+    
+    {% if user.is_authenticated %}
+        <div class="alert alert-success mt-4">
+            You are logged in as <strong>{{ user.username }}</strong>
+        </div>
+        <a href="{% url 'logout' %}" class="btn btn-danger mt-3">Logout</a>
+    {% else %}
+        <div class="mt-4">
+            <h3>Please login or register</h3>
+            <div class="d-grid gap-3 col-md-6 mx-auto mt-4">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{% url 'register_student' %}" class="btn btn-success btn-lg w-100">Student Registration</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'register_faculty' %}" class="btn btn-info btn-lg w-100">Faculty Registration</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

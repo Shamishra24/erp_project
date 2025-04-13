@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Manage Grades - {{ course.name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        Manage Grades - {{ course.name }} ({{ course.code }})
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <label class="form-label">Semester: {{ semester }}</label>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-success">Save Grades</button>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Roll No</th>
+                            <th>Student Name</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.roll_number }}</td>
+                            <td>{{ student.user.get_full_name }}</td>
+                            <td>
+                                <select class="form-select" name="grade_{{ student.id }}" style="width: 100px;">
+                                    <option value="">-- Select --</option>
+                                    {% for grade in grade_choices %}
+                                    <option value="{{ grade }}" 
+                                        {% if existing_grades|get_item:student.id == grade %}selected{% endif %}>
+                                        {{ grade }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Custom template filter to get dictionary item
+function get_item(dictionary, key) {
+    return dictionary[key];
+}
+</script>
+{% endblock %}
